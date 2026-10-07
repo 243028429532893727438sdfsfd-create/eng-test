@@ -73,8 +73,22 @@ export class GamesService {
   }
 
   async processTap(userId: string, roundUuid: string, role: string): Promise<{ score: number }> {
-    if (role != 'nikita') {
-      // Обновить запись в таблице score
+    const round = await this.roundModel.findByPk(roundUuid);
+    if (!round) {
+      throw new BadRequestException('Round not found');
+    }
+
+    const now = new Date();
+    const isActive = now >= new Date(round.start_datetime) && now <= new Date(round.end_datetime);
+    if (!isActive) {
+      throw new BadRequestException('Round is not active');
+    }
+
+    // Убедимся, что запись о счете существует
+    await this.getOrCreateScoreByUserAndRound(userId, roundUuid);
+
+    if (role !== 'nikita') {
+      // Атомарно обновить счетчик тапов
       await this.scoreModel.increment('taps', {
         by: 1,
         where: {
@@ -84,15 +98,17 @@ export class GamesService {
       });
     }
 
-      const scoreRecord = await this.scoreModel.findOne({
-        where: {
-          user: userId,
-          round: roundUuid,
-        },
-      });
-      const score = this.scoreFromTapsCount(scoreRecord.taps);
+    const scoreRecord = await this.scoreModel.findOne({
+      where: {
+        user: userId,
+        round: roundUuid,
+      },
+    });
 
-      return { score };
+    const taps = scoreRecord ? scoreRecord.taps : 0;
+    const score = role === 'nikita' ? 0 : this.scoreFromTapsCount(taps);
+
+    return { score };
   }
 
   async getRoundSummary(roundUuid: string): Promise<{

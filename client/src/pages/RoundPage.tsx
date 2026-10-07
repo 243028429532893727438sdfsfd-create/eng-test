@@ -175,7 +175,7 @@ const RoundPage: React.FC = () => {
         <button onClick={() => navigate('/')} className="back-button">
           ← Вернуться к списку раундов
         </button>
-        <h1>Раунд к={needReloadOnFinish} {round.uuid.slice(0, 8)}</h1>
+        <h1>Раунд {round.uuid.slice(0, 8)}</h1>
       </div>
 
       <div className="round-info">
