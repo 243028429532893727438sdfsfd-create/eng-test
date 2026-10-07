@@ -2,7 +2,7 @@
 
 **Кандидат:** Пятыров Иван Алексеевич  
 **Специализация:** Fullstack-разработчик (React, TypeScript, Node.js, Python, PostgreSQL)  
-**Контакты:** Telegram: [@Ivan25006](https://t.me/Ivan25006) | Телефон: +7 (999) 010-17-50 | Email: vanya-super2000@mail.ru  
+**Контакты:** Telegram: [@Ivan25006](https://t.me/Ivan25006) | Телефон: +7 (999) 010-17-50 | Email: VanyaPyatyrov2000@yandex.ru  
 **GitHub:** [243028429532893727438sdfsfd-create](https://github.com/243028429532893727438sdfsfd-create)
 
 ---
